@@ -1,0 +1,20 @@
+{
+  "name": "typescript-lambda-boilerplate",
+  "version": "1.0.0",
+  "description": "An Typescript boilerplate for AWS Lambda (Node.js 6.10)",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  },
+  "scripts": {
+    "build": "npm run build:init && npm run build:js && npm run build:install",
+    "build:init": "rm -rf dist && mkdir dist",
+    "build:js": "tsc",
+    "build:install": "cp package.json dist/ && cd dist && npm install --production",
+    "package": "npm run build && npm run package:pack",
+    "package:pack": "rm -f $npm_package_name.zip && cd dist/ && zip -r ../$npm_package_name.zip *",
+    "deploy": "npm run package && read -p \"Enter S3 Destination (e.g. s3://[bucket-name]/): \" destination && aws s3 cp $npm_package_name.zip $destination"
+  },
+  "author": "Martin Strapko",
+  "license": "Unlicense"
+}
